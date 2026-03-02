@@ -1,7 +1,8 @@
 package service;
 
 public interface ListManager {
-    void getShoppingList();
+    String[] getShoppingList();
+    void printShoppingList();
     void addProductToShoppingList(String product);
     void clearShoppingList();
 }
