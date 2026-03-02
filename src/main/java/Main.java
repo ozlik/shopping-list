@@ -31,8 +31,9 @@ public class Main {
                     System.out.println("Введите название товара без пробелов. Например: сгущеное_молоко");
                     String product = scanner.next();
                     manager.addProductToShoppingList(product);
+                    System.out.println("Товар добавлен в список");
                 }
-                case 2 -> manager.getShoppingList();
+                case 2 -> manager.printShoppingList();
                 case 3 -> manager.clearShoppingList();
                 case 4 -> isActive = false;
                 default -> System.out.println("Команда не найдена. Попробуйте ещё раз.");
