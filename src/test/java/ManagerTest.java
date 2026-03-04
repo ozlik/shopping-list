@@ -61,14 +61,24 @@ class ManagerTest {
     void shouldThrowToFullShoppingList() {
         createShoppingList();
         manager.addProductToShoppingList("сок");
-        manager.addProductToShoppingList("сок");
-        manager.addProductToShoppingList("сок");
-        manager.addProductToShoppingList("сок");
-        manager.addProductToShoppingList("сок");
+        manager.addProductToShoppingList("лук");
+        manager.addProductToShoppingList("уксус");
+        manager.addProductToShoppingList("масло");
+        manager.addProductToShoppingList("пиво");
+        manager.addProductToShoppingList("вино");
+
+        assertThrows(ProductSaveException.class, () -> manager.addProductToShoppingList("виски"));
+    }
+
+    @Test
+    @DisplayName("не добавлять товар в список, если он уже там есть")
+    void shouldNotAddExistProductInShoppingList() {
+        createShoppingList();
         manager.addProductToShoppingList("сок");
 
         assertThrows(ProductSaveException.class, () -> manager.addProductToShoppingList("сок"));
     }
+
     @Test
     @DisplayName("очищать список покупок")
     void shouldClearShoppingList() {
