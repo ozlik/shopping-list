@@ -19,7 +19,7 @@ public class Manager implements ListManager {
 
     @Override
     public String[] getShoppingList() {
-        if (counter == 0) {
+        if (listIsEmpty()) {
             throw new EmptyShoppingListException();
         }
         return shoppingList;
@@ -27,23 +27,35 @@ public class Manager implements ListManager {
 
     @Override
     public void printShoppingList() {
-        if (counter != 0) {
+        if (listIsEmpty()) {
+            System.out.println("Список покупок пуст!");
+        } else {
             for (int i = 0; i < counter; i++) {
                 System.out.println((i + 1) + " " + shoppingList[i]);
             }
-        } else {
-            System.out.println("Список покупок пуст!");
         }
     }
 
     @Override
     public void addProductToShoppingList(String product) {
-        if (counter < MAX_LIST_SIZE) {
-            shoppingList[counter] = product;
-            setCounter();
-        } else {
+        boolean isProductExist = false;
+        if (counter == MAX_LIST_SIZE) {
             throw new ProductSaveException("Нельзя добавить товар. В списке максимальное количество товаров: "
                     + MAX_LIST_SIZE);
+        } else {
+            for (int i = 0; i < counter; i++) {
+                if (shoppingList[i].equals(product)) {
+                    isProductExist = true;
+                    break;
+                }
+            }
+            if (isProductExist) {
+                throw new ProductSaveException("Товар уже есть в списке");
+            } else {
+                shoppingList[counter] = product;
+                setCounter();
+            }
+
         }
     }
 

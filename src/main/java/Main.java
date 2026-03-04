@@ -1,4 +1,5 @@
 import service.Manager;
+import service.ProductSaveException;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -30,8 +31,12 @@ public class Main {
                 case 1 -> {
                     System.out.println("Введите название товара без пробелов. Например: сгущеное_молоко");
                     String product = scanner.next();
-                    manager.addProductToShoppingList(product);
-                    System.out.println("Товар добавлен в список");
+                    try {
+                        manager.addProductToShoppingList(product);
+                        System.out.println("Товар добавлен в список");
+                    } catch (ProductSaveException e) {
+                        System.err.println("Ошибка при добавлении товара: " + e.getMessage());
+                    }
                 }
                 case 2 -> manager.printShoppingList();
                 case 3 -> manager.clearShoppingList();
