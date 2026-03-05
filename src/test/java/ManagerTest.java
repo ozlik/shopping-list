@@ -57,8 +57,8 @@ class ManagerTest {
     }
 
     @Test
-    @DisplayName("не добавлять товары в переполненный список")
-    void shouldThrowToFullShoppingList() {
+    @DisplayName("добавлять товары в переполненный список")
+    void shouldAddProductToFullShoppingList() {
         createShoppingList();
         manager.addProductToShoppingList("сок");
         manager.addProductToShoppingList("лук");
@@ -66,8 +66,11 @@ class ManagerTest {
         manager.addProductToShoppingList("масло");
         manager.addProductToShoppingList("пиво");
         manager.addProductToShoppingList("вино");
+        manager.addProductToShoppingList("виски");
 
-        assertThrows(ProductSaveException.class, () -> manager.addProductToShoppingList("виски"));
+        String[] listToCheck = manager.getShoppingList();
+
+        assertEquals(listToCheck.length, 9);
     }
 
     @Test
