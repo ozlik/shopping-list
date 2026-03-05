@@ -5,4 +5,5 @@ public interface ListManager {
     void printShoppingList();
     void addProductToShoppingList(String product);
     void clearShoppingList();
+    void extendList();
 }

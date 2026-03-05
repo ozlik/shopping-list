@@ -2,7 +2,7 @@ package service;
 
 public class Manager implements ListManager {
     private String[] shoppingList;
-    public final int MAX_LIST_SIZE = 8;
+    public int MAX_LIST_SIZE = 8;
     private int counter = 0;
 
     public Manager(String[] shoppingList) {  //нет ограничения по размеру
@@ -40,22 +40,19 @@ public class Manager implements ListManager {
     public void addProductToShoppingList(String product) {
         boolean isProductExist = false;
         if (counter == MAX_LIST_SIZE) {
-            throw new ProductSaveException("Нельзя добавить товар. В списке максимальное количество товаров: "
-                    + MAX_LIST_SIZE);
+            extendList();
+        }
+        for (int i = 0; i < counter; i++) {
+            if (shoppingList[i].equals(product)) {
+                isProductExist = true;
+                break;
+            }
+        }
+        if (isProductExist) {
+            throw new ProductSaveException("Товар уже есть в списке");
         } else {
-            for (int i = 0; i < counter; i++) {
-                if (shoppingList[i].equals(product)) {
-                    isProductExist = true;
-                    break;
-                }
-            }
-            if (isProductExist) {
-                throw new ProductSaveException("Товар уже есть в списке");
-            } else {
-                shoppingList[counter] = product;
-                setCounter();
-            }
-
+            shoppingList[counter] = product;
+            setCounter();
         }
     }
 
@@ -73,5 +70,15 @@ public class Manager implements ListManager {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void extendList() {
+        String[] newShoppingList = new String[shoppingList.length + 1];
+        for (int i = 0; i < shoppingList.length; i++) {
+            newShoppingList[i] = shoppingList[i];
+        }
+        shoppingList = newShoppingList;
+        MAX_LIST_SIZE++;
     }
 }
