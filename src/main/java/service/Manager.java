@@ -75,8 +75,9 @@ public class Manager implements ListManager {
     @Override
     public void extendList() {
         String[] newShoppingList = new String[shoppingList.length + 1];
-        for (int i = 0; i < shoppingList.length; i++) {
-            newShoppingList[i] = shoppingList[i];
+        for (int i = 0; i < shoppingList.length; i++) {  /*можно переключить на натив  System.arraycopy, но не имеет смысла
+            так как массив списка покупок не планируется большим и не целесообразно переключаться на нативный код
+            newShoppingList[i] = shoppingList[i]; */
         }
         shoppingList = newShoppingList;
         MAX_LIST_SIZE++;
